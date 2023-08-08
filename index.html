@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPENSE TRACKER</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        body{
+            height: 100vh;
+            width: 100vw;
+            background-color:gainsboro;
+            display: grid;
+            place-items: center;
+        }
+        .container{
+            height: 600px;
+            width: 800px;
+            background-color: white;
+            display: flex;
+            padding: 20px;
+        }
+        .left h2{
+           /* color: orange;*/
+           color: beige;
+        }
+        .left
+        {
+            flex: 1;
+           /* background-color: rgb(41, 13, 67);*/
+            background-color: black;
+           /* color: white;*/
+           color: beige;
+            padding: 10px;
+        }
+        .left h2,
+        .left h4,
+        .left h1{
+            margin-bottom: 5px;
+            padding: 5px;
+        }
+        .left h1{
+            font-size: 25px;
+        }
+        .inc-exp{
+            display: flex;
+            gap: 10px;
+            padding: 20px
+        }
+        .inc-exp div{
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            font-size: 15px;   
+        }
+        .inc{
+            border: 4px solid green;
+            color: green;
+        }
+        .inc h3,
+        .exp h3{
+            padding: 5px;
+        }
+        .exp{
+            border: 4px solid red;
+            color: red;
+        }
+        .form-control{
+            margin-top: 20px;
+            padding: 5px;
+        }
+        label{
+            display: inline-block;
+            color: azure;
+        }
+        input{
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+        .btn{
+            background-color:rgb(63, 158, 240);
+            color:white;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        .right{
+            flex: 1;
+            padding: 10px;
+        }
+        .right h3{
+            text-align: center;
+        }
+        .exp-list{
+            margin-top: 15px;
+        }
+        li{
+          padding:15px;
+          margin-bottom: 10px;
+           /* box-shadow:   0 10px 6px -6px #777;
+            box-shadow: 10px 10px 6px -6px #777;
+            -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+            -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);*/
+          box-shadow:0 0 5px rgba(0,0,0,0.8);
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+          font-size: 15px;
+          font-weight: 550;
+          
+        }    
+       li button{
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            color: white;
+            background-color: red;
+            font-size: 10px; 
+            width: 15px;
+            border-radius: 50%;  
+        }    
+        .exp-list li.neg{
+            border-left: red 5px solid;
+        }  
+        .exp-list li.pos{
+            border-left: green 5px solid;
+        }  
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h2>INCOME EXPENSE TRACKER</h2>
+            <h4>Your Balance</h4>
+            <h1 class="bal">Rs:0.00</h1>
+            <div class="inc-exp">
+                <div class="inc">
+                    <h3>INCOME</h3>
+                    <h3 class="inrs">Rs:0.00</h3>
+                </div>
+                <div class="exp">
+                    <h3>EXPENSE</h3>
+                    <h3 class="exrs">Rs:0.00</h3>
+                </div>
+            </div>
+            <form class="form-control">
+                <label id="label" for="">Description</label>
+                <input class="des" type="text" placeholder="Enter Description"><br>
+                <label id="label" for="">Amount</label>
+                <input class="enamount" type="text" placeholder="Enter Amount"><br>
+                <button type="submit" class="btn">SUBMIT TRANSACTION</button>
+            </form>
+        </div>
+        <div class="right">
+            <h3>TRANSACTION DETAILS</h3>
+            <ul class="exp-list" type="none">
+                <!--<li class="neg">insurance <span>100</span><button>x</button></li>
+                <li class="pos">salary <span>20000</span><button>x</button></li>
+                <li class="neg">shop <span>400</span><button>x</button></li>-->
+            </ul>
+        </div>
+    </div>
+    <script>
+        const bal= document.querySelector(".bal");  
+        const income= document.querySelector(".inrs");  
+        const expense= document.querySelector(".exrs");  
+        const form= document.querySelector(".form-control");  
+        const translist= document.querySelector(".exp-list");  
+        const Description= document.querySelector(".des");  
+        const Amount= document.querySelector(".enamount"); 
+        
+        const datas =
+         [
+        // {id: 1, description: "insurance", amount: -500},
+        // {id: 2, description: "salary", amount: 10000},
+        // {id: 3, description: "shop", amount: -100},
+        // {id: 4, description: "petrol", amount: -300}
+        ];
+
+       //let transactions=data
+       
+       function transfer(transaction){
+       // console.log(transaction);
+        const sign = transaction.amount<0 ? "-" : " " ;
+        const item = document.createElement("li");
+        const a = transaction.amount<0 ? "neg" : "pos";   
+        item.classList.add(a);
+        item.innerHTML = transaction.description;
+        const sp= document.createElement("span");
+        item.appendChild(sp);
+        sp.innerHTML = transaction.amount;
+        const but = document.createElement("button");
+        item.appendChild(but);
+        but.innerHTML = 'x';
+       // but.onclick=deleteitem(this.transaction.id);
+        translist.appendChild(item);
+       }
+    //   function deleteitem(id){
+    //        if(confirm("want to delete this one")){
+    //            datas=datas.filter((data)=> {
+    //                data.id != id;
+    //            });            
+    //        }
+    //        else{
+    //            return;
+    //        }
+    //   }
+      
+      function addamount(){
+        const amounts = datas.map((data)=>data.amount);
+        console.log(amounts);
+        const total = Number(amounts.reduce((accumulator,value)=>(accumulator+=value),0)).toFixed(2);
+        bal.innerText = "RS :"+total;
+
+        const inc = amounts.filter((value)=>(value>0)).reduce((acc,value)=>(acc+=value));
+        income.innerText = "RS :"+inc;
+
+        const ex = amounts.filter((value)=>(value<0)).reduce((acc,val)=>(acc+=val));
+        expense.innerText = "RS :"+ Math.abs(ex);
+      }
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+            if(Description.value.trim() ==""|| Amount.value.trim() == "" || !isNaN(Description.value))
+            {
+                    alert("Enter valid datas");
+            }
+            else{
+                const newitems ={
+                id : randomid(),
+                description : Description.value,
+                amount : Number(Amount.value),
+             };
+            datas.push(newitems);
+            transfer(newitems);
+            Description.value ="";
+            Amount.value ="";
+            addamount();
+            }
+        })
+        function randomid(){
+            return Math.floor( Math.random()*1000);
+        }
+        
+        function restart(){
+            translist.innerHTML="";
+            datas.forEach(transfer); 
+            addamount();
+        }
+        window.addEventListener("load",function(){
+            restart();
+        });
+    </script>
+</body>
+</html>
